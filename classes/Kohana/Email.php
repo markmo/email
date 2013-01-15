@@ -119,6 +119,8 @@ class Kohana_Email {
 	 */
 	protected $_message;
 
+	public $template;
+
 	/**
 	 * Initialize a new Swift_Message, set the subject and body.
 	 *
@@ -143,6 +145,7 @@ class Kohana_Email {
 			// Apply message, with type
 			$this->message($message, $type);
 		}
+		$this->template = Twig::factory();
 	}
 
 	/**
@@ -182,6 +185,16 @@ class Kohana_Email {
 		}
 
 		return $this;
+	}
+
+	public function messageTemplate($file, $vars = array(), $type = NULL)
+	{
+		$this->template->set_filename($file);
+		foreach ($vars as $key => $value)
+		{
+			$this->template[$key] = $value;
+		}
+		return $this->message($this->template, $type);
 	}
 
 	/**
