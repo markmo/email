@@ -192,7 +192,7 @@ class Kohana_Email {
 		$this->template->set_filename($file);
 		foreach ($vars as $key => $value)
 		{
-			$this->template[$key] = $value;
+			$this->template->set($key, $value);
 		}
 		return $this->message($this->template, $type);
 	}
